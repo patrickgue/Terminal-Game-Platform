@@ -22,6 +22,18 @@
     src: url('./vendor/Glass_TTY_VT220.ttf');
 }
 
+@font-face {
+    font-family: 'Jost';
+    src: url('./vendor/Jost-400-Book.ttf');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Jost';
+    src: url('./vendor/Jost-900-Black.ttf');
+    font-weight: 900;
+}
+
 
 * {
     margin: 0;
@@ -354,12 +366,19 @@ pre {
 
 .computer-box {
     display: flex;
+    justify-content: space-between;
     gap: 20px;
     width: var(--width);
     height: 200px;
     border-width: 20px;
-    background-color: #0e0f0f;
+    background-color: #101111;
     padding: 20px;
+}
+
+.led-button {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
 }
 
 .led {
@@ -400,4 +419,10 @@ pre {
     border-bottom-width: 4px;;
     margin: 5px;
     background: linear-gradient(rgb(100, 28, 28), rgb(216, 72, 72), rgb(216, 72, 72))
+}
+
+.label {
+    font-family: 'Jost';
+    font-size: 14pt;
+    font-weight: 400;
 }

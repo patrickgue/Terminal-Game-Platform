@@ -35,6 +35,15 @@ function gets()
     return rt_text
 end
 
+function sleep(millis)
+    local co = coroutine.running()
+    js.global:setTimeout(function ()
+        coroutine.resume(co)
+    end, millis)
+
+    coroutine.yield()
+end
+
 function color_on(color)
     js.global:color_on(color)
 end

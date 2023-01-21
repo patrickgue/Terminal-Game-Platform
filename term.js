@@ -10,6 +10,8 @@ let buffer = '';
 let echo = false;
 let res;
 
+let putc_stack = [];
+
 function initterm(w,h)
 {
     term = document.querySelector('.crt pre');
@@ -26,8 +28,12 @@ function _render()
     term.innerHTML = _html + '<span class="cursor"> </span>';
 }
 
-
 function putc(c)
+{
+    putc_stack.push(c);
+}
+
+function putc_actual(c)
 {
     if (!term)
         throw new Error("no CRT found");
@@ -52,6 +58,15 @@ function putc(c)
 
     _render();
 }
+
+setInterval(() => {
+    if (putc_stack.length > 0)
+    {
+        putc_stack.reverse();
+        putc_actual(putc_stack.pop());
+        putc_stack.reverse();
+    }
+}, 30)
 
 function puts(s)
 {
