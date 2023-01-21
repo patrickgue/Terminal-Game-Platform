@@ -1,110 +1,70 @@
+
 initterm(80,25);
 
-const test = ` 
-            ^I^C4 Ships ^C0^I
-  
-      A   B   C   D   E   F   G  
-    +---+---+---+---+---+---+---+
-  0 |   |   |   |   |   |   |   |
-    |---+---+---+---+---+---+---|
-  1 |   |   |   |   |   |   |   |
-    |---+---+---+---+---+---+---|
-  2 |   |   |   |   |   |   |   |
-    |---+---+---+---+---+---+---|
-  3 |   |   |   |   |   |   |   |
-    |---+---+---+---+---+---+---|
-  4 |   |   |   |   |   |   |   |
-    |---+---+---+---+---+---+---|
-  5 |   |   |   |   |   |   |   |
-    |---+---+---+---+---+---+---|
-  6 |   |   |   |   |   |   |   |
-    |---+---+---+---+---+---+---|
-  7 |   |   |   |   |   |   |   |
-    +---+---+---+---+---+---+---+`
 
-
-let index = 0;
-
-let interval = setInterval(() => {
-  let c = test.charAt(index);
-
-  if (c === '^' && ['I', 'C'].includes(test.charAt(index+1))) {
-    index++;
-    if (test.charAt(index) === 'C') {
-      index++;
-      switch (test.charAt(index)) {
-        case '0':
-          color_off(); break;
-        case '1': 
-          color_on(COLOR_BLACK); break;
-        case '2': 
-          color_on(COLOR_RED); break;
-        case '3': 
-          color_on(COLOR_GREEN); break;
-        case '4': 
-          color_on(COLOR_BLUE); break;
-      }
-      
-    } else if (test.charAt(index) == 'I') {
-      inverse_toggle(); 
+const methods = {
+    print: {
+        call: (arguments,scope) => {
+            console.log(parseArguments(arguments,scope));
+            puts(parseArguments(arguments,scope).replaceAll('\\n', '\n'));
+        }
     }
-  } else {
-    putc(c);
-  }
-  
-  if (index > test.length)
-    clearInterval(interval);
-  index++;
-}, 10);
-/*
-puts(test + '\n');
-for(i = 0; i < 2; i++) {
-
-    color_on(COLOR_RED);
-    puts(" Red \n")
-    color_off();
-    color_on(COLOR_BLUE);
-    puts(" Blue \n");
-    color_off();
-    color_on(COLOR_GREEN);
-    puts(" Green \n");
-    color_off();
-    inverse_on();
-}
-
-puts("Hello\n")
-
-inverse_off();
+};
 
 
 
-for (i = 0; i < 80; i++) {
-    putc('#');
-}
+fetch("programs/world.lua").then(r => r.text()).then(codeText => {
 
-for (j = 0; j < 23; j++) {
-    putc('#')
-    for (i = 0; i < 78; i++) {
-        putc(' ');
-    }
-    putc('#');
-}
+    const code = `
 
-for (i = 0; i < 80; i++) {
-    putc('#');
-}
+function puts(str)
+    js.global:puts(str)
+end
 
-*/
+function gets()
+    local rt_text
+    local co = coroutine.running()
+    promise = js.global:gets();
+    promise['then'](promise, function(_, text)
+        rt_text = text
+        print(text, rt_text)
+        coroutine.resume(co)
+    end)
 
+    coroutine.yield()
+    return rt_text
+end
 
-const input = document.querySelector("#input");
+function color_on(color)
+    js.global:color_on(color)
+end
 
-document.body.addEventListener('click', () => input.focus());
-input.addEventListener('keydown', (e) => {
-  e.preventDefault();
-  console.log(e);
-  if (e.key === 'Enter')
-  {
-    puts("ENTER\n");
-  }
+function color_off()
+    js.global:color_off()
+end
+
+function inverse_on()
+    js.global:inverse_on()
+end
+
+function inverse_off()
+    js.global:inverse_off()
+end
+
+COLOR_BLACK='#272C2B'
+COLOR_WHITE='#EEEEEE';
+COLOR_RED='#FF0000';
+COLOR_BLUE='#1471AA';
+COLOR_GREEN='#06B46B';
+
+coroutine.wrap(function ()
+    ${codeText}
+end)()
+
+`
+    // console.log(code)
+    const state = new Lua.State();
+    state.execute(code);
+    
 });
+

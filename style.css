@@ -1,17 +1,25 @@
 :root {
-    --width: 768px;
-    --height: 520px;
-    --header-height: 200px;
+    --width: 760px;
+    --height: 500px;
+
+    --offset-left: 70px;
+    --offset-top: 50px;
+
+    --width-wide: calc(var(--width) + var(--offset-left));
+    --height-wide: calc(var(--height) + var(--offset-top));
+
+    --header-height: 100px;
     --border-color: rgb(92, 88, 88);
     --border: 6px solid #666;
     --background: #0e0f0f;
     --text: #ddd;
     --text-shadow: #444;
+    --border-size: 32px;
 }
 
 @font-face {
     font-family: vt200;
-    src: url('./Glass_TTY_VT220.ttf');
+    src: url('./vendor/Glass_TTY_VT220.ttf');
 }
 
 
@@ -24,7 +32,7 @@
 body {
     display: flex;
     flex-direction: column;
-    
+
     align-items: center;
     background-color: var(--background);
     color: var(--text);
@@ -47,15 +55,17 @@ body {
 }
 
 .crt {
-    width: var(--width);
-    height: var(--height);
+    width: var(--width-wide);
+    height: var(--height-wide);
     background: radial-gradient(rgb(64, 67, 66), rgb(49, 51, 51));
     color: #eee;
-    overflow: hidden;    
-    animation: textShadow 1.6s infinite; 
+    overflow: hidden;
+    animation: textShadow 1.6s infinite;
     display: flex;
     padding: 4px;
     position: relative;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, .9);
 
 }
 
@@ -67,26 +77,34 @@ body {
     border-radius: 8px;
 }*/
 
-.border {
-    background-image: url('./assets/frame.png');
-    background-size: 100%;
+.border,
+.computer-box {
+    border: solid var(--border-size) #eee;
+    border-left-color: #bbb;
+    border-bottom-color: #ccc;
+    border-right-color: #ddd;
+    border-radius: 12px;
+    background-color: #ddd;
 }
 
 
 .frame {
     position: absolute;
-    left: calc((100vw - var(--width)) / 2);
-    top: var(--header-height);
-    width: var(--width);
-    height: var(--height);
+    left: calc((100vw - var(--width-wide)) / 2);
+    top: calc(var(--header-height) + var(--border-size));
+    width: var(--width-wide);
+    height: var(--height-wide);
     background-image: url('./assets/frame.png');
-    background-size: 100%;
+    background-size: 100% 100%;
+    border-radius: 10px;
 }
 
 pre {
     font-family: 'vt200';
     font-size: 14pt;
-    line-height: 1;
+    line-height: 1.05;
+    margin-left: calc(var(--offset-left) / 2);
+    margin-top: calc(var(--offset-top) / 2);
 }
 
 .crt::before {
@@ -102,8 +120,8 @@ pre {
     background-size: 100% 2px, 3px 100%;
     pointer-events: none;
 
-    width: var(--width);
-    height: var(--height);
+    width: var(--width-wide);
+    height: var(--height-wide);
 }
 
 #input {
@@ -112,65 +130,85 @@ pre {
 
 @keyframes flicker {
     0% {
-    opacity: 0.27861;
+        opacity: 0.27861;
     }
+
     5% {
-    opacity: 0.34769;
+        opacity: 0.34769;
     }
+
     10% {
-    opacity: 0.23604;
+        opacity: 0.23604;
     }
+
     15% {
-    opacity: 0.90626;
+        opacity: 0.90626;
     }
+
     20% {
-    opacity: 0.18128;
+        opacity: 0.18128;
     }
+
     25% {
         opacity: 0.83891;
     }
+
     30% {
         opacity: 0.65583;
     }
+
     35% {
         opacity: 0.67807;
     }
+
     40% {
         opacity: 0.26559;
     }
+
     45% {
         opacity: 0.84693;
     }
+
     50% {
         opacity: 0.96019;
     }
+
     55% {
         opacity: 0.08594;
     }
+
     60% {
         opacity: 0.20313;
     }
+
     65% {
         opacity: 0.71988;
     }
+
     70% {
         opacity: 0.53455;
     }
+
     75% {
         opacity: 0.37288;
     }
+
     80% {
         opacity: 0.71428;
     }
+
     85% {
         opacity: 0.70419;
     }
+
     90% {
         opacity: 0.7003;
     }
+
     95% {
         opacity: 0.36108;
     }
+
     100% {
         opacity: 0.24387;
     }
@@ -187,7 +225,7 @@ pre {
     background: rgba(18, 16, 16, 0.1);
     opacity: 0;
     z-index: 2;
-    width: var(--width);
+    width: var(--width-wide);
     height: var(--height);
     pointer-events: none;
     animation: flicker 0.15s infinite;
@@ -291,6 +329,7 @@ pre {
     50% {
         background-color: transparent;
     }
+
     99% {
         background-color: transparent;
     }
@@ -298,4 +337,67 @@ pre {
 
 .cursor {
     animation: cursor 1s infinite;
+}
+
+
+.outer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stand {
+    width: 600px;
+    height: 15px;
+    background-color: #444;
+}
+
+.computer-box {
+    display: flex;
+    gap: 20px;
+    width: var(--width);
+    height: 200px;
+    border-width: 20px;
+    background-color: #0e0f0f;
+    padding: 20px;
+}
+
+.led {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: rgb(216, 72, 72);
+    box-shadow: 0 0 5px rgb(247, 106, 106, .9);
+    animation: pulse 3s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        background-color: rgb(100, 28, 28);
+        box-shadow: none
+    }
+    49% {
+        background-color: rgb(100, 28, 28);
+        box-shadow: none    
+    }
+    50% {
+        background-color: rgb(216, 72, 72);
+        box-shadow: 0 0 5px rgb(247, 106, 106, .9);
+    }
+}
+
+
+.switch-border {
+    width: 32px;
+    height: 60px;
+    background-color: rgb(216, 72, 72)
+}
+
+.switch {
+    width: 22px;
+    height: 50px;
+    border: 2px solid rgb(40,40,40);
+    border-bottom-width: 4px;;
+    margin: 5px;
+    background: linear-gradient(rgb(100, 28, 28), rgb(216, 72, 72), rgb(216, 72, 72))
 }

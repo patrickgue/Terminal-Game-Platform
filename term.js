@@ -6,6 +6,10 @@ const COLOR_RED='#FF0000';
 const COLOR_BLUE='#1471AA';
 const COLOR_GREEN='#06B46B';
 
+let buffer = '';
+let echo = false;
+let res;
+
 function initterm(w,h)
 {
     term = document.querySelector('.crt pre');
@@ -93,3 +97,43 @@ function color_off()
 
     _render();
 }
+
+function gets(callback)
+{
+    buffer = '';
+    echo = true;
+
+
+    return new Promise(resolve => {
+        res = resolve;
+    })
+}
+
+const input = document.querySelector("#input");
+
+document.body.addEventListener('click', () => input.focus());
+input.addEventListener('keydown', (e) => {
+    e.preventDefault();
+    console.log(e);
+    if (e.key === 'Enter')
+    {
+        // puts("ENTER\n");
+        console.log(buffer);
+        if (res)
+            res(buffer);
+        echo = false;
+    }
+
+    if (echo)
+    {
+
+        if (e.key.length === 1)
+        {
+            putc(e.key);
+            buffer += e.key;
+        }
+        else if (e.keyCode === 10 || e.keyCode === 13)
+            putc('\n');
+
+    }
+});

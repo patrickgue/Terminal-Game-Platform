@@ -1,0 +1,1 @@
+puts("\n  (c) 2023 - Terminal Game\n\n  65545 bytes free\n\n  Booting UNIX...")
