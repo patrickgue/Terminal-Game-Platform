@@ -13,7 +13,7 @@ const methods = {
 
 
 
-fetch("programs/world.lua").then(r => r.text()).then(codeText => {
+fetch("programs/battleship.lua").then(r => r.text()).then(codeText => {
 
     const code = `
 
@@ -55,6 +55,7 @@ function clear()
     js.global:clear()
 end
 
+
 COLOR_BLACK='#272C2B'
 COLOR_WHITE='#EEEEEE';
 COLOR_RED='#FF0000';
@@ -68,6 +69,5 @@ end)()
 `;
     const state = new Lua.State();
     state.execute(code);
-    
 });
 

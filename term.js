@@ -10,6 +10,7 @@ let buffer = '';
 let echo = false;
 let res;
 let current_color = null;
+let baud = 1000;
 
 let putc_stack = [];
 
@@ -176,4 +177,4 @@ setInterval(() => {
         }
 
     }
-}, 30)
+}, 1000 / (baud / 8));
