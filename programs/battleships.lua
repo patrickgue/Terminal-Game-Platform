@@ -43,10 +43,16 @@ function print_boards()
         for j = 1,10,1
         do
             p = own[i][j]
+
             if (p == 0) then
                 puts("_|")
-            else
+            elseif (p == 1) then
                 puts("#|")
+                print(i, j, p)
+            elseif (p == 2) then
+                puts("x|")
+            elseif (p == 3) then
+                puts("o|")
             end
         end
 
@@ -59,8 +65,12 @@ function print_boards()
             p = enemy[i][j]
             if (p == 0) then
                 puts("_|")
-            elseif (i == 1) then
+            elseif (p == 1) then
                 puts("#|")
+            elseif (p == 2) then
+                puts("x|")
+            elseif (p == 3) then
+                puts("o|")
             end
         end
         puts("\n")
@@ -97,10 +107,10 @@ own = {
     {0,0,0,1,0,0,0,0,0,0},
     {0,0,0,1,0,0,0,0,0,0},
     {0,0,0,1,0,0,1,0,0,0},
-    {0,0,0,1,0,0,1,0,0,0},
+    {0,0,0,1,0,0,1,0,3,0},
     {0,0,0,0,0,0,1,0,0,0},
     {0,0,0,0,0,0,0,0,0,0},
-    {0,0,1,1,1,0,0,0,0,0},
+    {0,0,1,1,2,0,3,0,0,0},
     {0,0,0,0,0,0,0,0,0,0}
 }
 
