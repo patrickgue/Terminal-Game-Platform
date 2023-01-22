@@ -1,0 +1,146 @@
+:root {
+    --width: 760px;
+    --height: 500px;
+
+    --offset-left: 70px;
+    --offset-top: 55px;
+
+    --width-wide: calc(var(--width) + var(--offset-left));
+    --height-wide: calc(var(--height) + var(--offset-top));
+
+    --header-height: 100px;
+    --border-color: rgb(92, 88, 88);
+    --border: 6px solid #666;
+    --background: #0e0f0f;
+    --text: #ddd;
+    --text-shadow: #444;
+    --border-size: 32px;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    background-color: var(--background);
+    color: var(--text);
+    font-family: 'Helvetica Neue';
+}
+
+.title {
+    width: var(--width);
+    height: var(--header-height);
+    display: flex;
+    justify-content: end;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.title h1 {
+    font-size: 28pt;
+    letter-spacing: -.04em;
+    text-shadow: 1px 0 0 var(--text-shadow);
+}
+
+.border,
+.computer-box {
+    border: solid var(--border-size) #eee;
+    border-left-color: #bbb;
+    border-bottom-color: #ccc;
+    border-right-color: #ddd;
+    border-radius: 12px;
+    background-color: #ddd;
+}
+
+
+
+.cursor {
+    animation: cursor 1s infinite;
+}
+
+
+.outer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stand {
+    width: 600px;
+    height: 15px;
+    background-color: #444;
+}
+
+.computer-box {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    width: var(--width);
+    height: 200px;
+    border-width: 20px;
+    background-color: #101111;
+    padding: 20px;
+}
+
+.led-button {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+}
+
+.led {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: rgb(216, 72, 72);
+    box-shadow: 0 0 5px rgb(247, 106, 106, .9);
+    animation: pulse 3s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        background-color: rgb(100, 28, 28);
+        box-shadow: none
+    }
+    49% {
+        background-color: rgb(100, 28, 28);
+        box-shadow: none    
+    }
+    50% {
+        background-color: rgb(216, 72, 72);
+        box-shadow: 0 0 5px rgb(247, 106, 106, .9);
+    }
+}
+
+
+.switch-border {
+    width: 32px;
+    height: 60px;
+    background-color: rgb(216, 72, 72)
+}
+
+.switch {
+    width: 22px;
+    height: 50px;
+    border: 2px solid rgb(40,40,40);
+    border-bottom-width: 4px;;
+    margin: 5px;
+    background: linear-gradient(rgb(100, 28, 28), rgb(216, 72, 72), rgb(216, 72, 72))
+}
+
+.label {
+    font-family: 'Jost';
+    font-size: 14pt;
+    font-weight: 400;
+    text-align: right;
+}
+

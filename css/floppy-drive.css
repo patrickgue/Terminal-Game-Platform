@@ -1,0 +1,93 @@
+.floppy-drive {
+    width: 350px;
+    height: 70px;
+    background-color: #222;
+    border-radius: 4px;
+}
+
+.drive-light {
+    width: 20px;
+    height: 7px;
+    background-color: rgb(50,50,50);
+    box-shadow: none;
+    border-radius: 1px;
+    margin: 10px 20px -2px;
+    animation: pulse-drive 30s infinite;
+}
+
+.drive-opening {
+    width: 310px;
+    height: 10px;
+    margin: 0 20px;
+    border-radius: 5px;
+    background-color: #111;
+}
+
+.drive-inset-top, .drive-inset-bottom {
+    width: 60px;
+    height: 15px;
+    margin: 0 145px;
+    background-color: #181818;
+}
+
+.drive-inset-top {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.drive-inset-bottom {
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.drive-flap {
+    width: 20px;
+    height: 45px;
+    margin-top: -45px;
+    margin-left: 260px;
+}
+
+.drive-flapp-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: #181818;
+}
+
+.drive-flapp-block {
+    width: 10px;
+    height: 25px;
+    background-color: #181818;
+    margin-left: 5px;
+}
+
+@keyframes pulse-drive {
+    0% {
+        background-color: rgb(33, 177, 129);
+        box-shadow: 0 0 5px rgb(33, 177, 129);
+    }
+    4% {
+        background-color: rgb(50,50,50);
+        box-shadow: none    
+    }
+    49% {
+        background-color: rgb(50,50,50);
+        box-shadow: none    
+    }
+    50% {
+        background-color: rgb(33, 177, 129);
+        box-shadow: 0 0 5px rgb(33, 177, 129);
+    }
+    51% {
+        background-color: rgb(50,50,50);
+        box-shadow: none    
+    }
+    52% {
+        background-color: rgb(33, 177, 129);
+        box-shadow: 0 0 5px rgb(33, 177, 129);
+    }
+    56% {
+        background-color: rgb(50,50,50);
+        box-shadow: none    
+    }
+}

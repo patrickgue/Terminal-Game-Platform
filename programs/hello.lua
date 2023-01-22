@@ -1,8 +1,7 @@
 
 
-inverse_on()
-color_on(COLOR_BLUE)
-puts("\n")
+
+color_on(COLOR_BLUE, COLOR_WHITE)
 
 
 puts("  _____ _____ ____  __  __ ___ _   _    _    _     \n")

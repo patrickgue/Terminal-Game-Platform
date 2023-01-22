@@ -3,13 +3,19 @@
     <head>
         <meta charset="utf-8" />
         <title>CRT</title>
-        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="css/fonts.css" />
+        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="css/crt.css" />
+        <link rel="stylesheet" href="css/floppy.css" />
+        <link rel="stylesheet" href="css/floppy-drive.css" />
     </head>
     <body>
+
+      <input id="input" type="text" />
       <div class="title">
         <h1>Terminal-Game</h1>
       </div>
-      <div class="outer">
+      <div id="wrapper" class="outer">
         <div class="border">
           <div class="crt">
             <pre></pre>
@@ -24,14 +30,29 @@
               <div class="switch"></div>
             </div>
           </div>
-          <span class="label">
-            TERMINAL-MACHINE 9000
-          </span>
+          <div class="led-button">
+            <span class="label">
+              TERMINAL-MACHINE 9000
+            </span>
+            <div class="floppy-drive">
+              <div class="drive-light"></div>
+              <div class="drive-inset-top"></div>
+              <div class="drive-opening"></div>
+              <div class="drive-inset-bottom"></div>
+              <div class="drive-flap">
+                <div class="drive-flapp-circle"></div>
+                <div class="drive-flapp-block"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <input id="input" type="text" />
-      <script src="./term.js"></script>
+      <div class="floppies"></div>
+      
+      
+      <script src="./app/term.js"></script>
       <script src="./vendor/lua.vm.js"></script>
-      <script src="./app.js"></script>
+      <script src="./app/app.js"></script>
+      <script src="./app/floppy.js"></script>
     </body>
 </html>

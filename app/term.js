@@ -31,7 +31,7 @@ function _render()
     if (!term)
         throw new Error("no CRT found");
 
-    term.innerHTML = _html + '<span class="cursor"> </span>';
+    term.innerHTML = _html + buffer + '<span class="cursor"> </span>';
 }
 
 function putc(c)
@@ -133,15 +133,21 @@ function clear()
 
 const input = document.querySelector("#input");
 
-document.body.addEventListener('click', () => input.focus());
+document.querySelector('#wrapper').addEventListener('click', () => input.focus());
 input.addEventListener('keydown', (e) => {
     e.preventDefault();
     console.log(e);
-    if (e.key === 'Enter')
+    if (e.keyCode === 10 || e.keyCode === 13)
     {
         if (res)
             res(buffer);
         echo = false;
+        puts(buffer)
+    }
+    else if (e.keyCode === 8)
+    {
+        buffer = buffer.substring(0, buffer.length - 1);
+        console.log(buffer);
     }
 
     if (echo)
@@ -149,12 +155,12 @@ input.addEventListener('keydown', (e) => {
 
         if (e.key.length === 1)
         {
-            putc(e.key);
             buffer += e.key;
         }
         else if (e.keyCode === 10 || e.keyCode === 13)
-            putc('\n');
+            buffer += '\n';
 
+        _render();
     }
 });
 

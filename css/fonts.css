@@ -1,0 +1,21 @@
+@font-face {
+    font-family: vt200;
+    src: url('../vendor/Glass_TTY_VT220.ttf');
+}
+
+@font-face {
+    font-family: 'Jost';
+    src: url('../vendor/Jost-400-Book.ttf');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Jost';
+    src: url('../vendor/Jost-900-Black.ttf');
+    font-weight: 900;
+}
+
+@font-face {
+    font-family: 'Shadows Into Light';
+    src: url('../vendor/ShadowsIntoLight-Regular.ttf');
+}

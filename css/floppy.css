@@ -1,0 +1,53 @@
+
+.floppies {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.floppy {
+    width: 300px;
+    height: 300px;
+    background-color: rgb(53, 53, 53);
+    border-radius: 4px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.floppy-label {
+    background-color: rgb(255, 255, 242);
+    width: 100px;
+    height: 75px;
+    border-radius: 3px;
+    font-family: 'Shadows Into Light';
+    color: #000;
+    font-size: 14pt;
+}
+
+.floppy-label span {
+    padding: 10px;
+}
+
+.floppy-label-head {
+    width: 100px;
+    height: 10px;
+    background-color: #0ca35d;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.floppy-hole {
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    margin: 25px 100px;
+    background-color: var(--background);
+}
+
+.floppy-opening {
+    width: 25px;
+    height: 80px;
+    border-radius: 40px;
+    margin: 25px 125px;
+    background-color: rgb(20, 20, 20);
+}

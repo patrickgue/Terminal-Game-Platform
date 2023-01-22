@@ -1,22 +1,29 @@
 
+
 initterm(80,25);
 
+puts("\n    Insert Floppy...")
 
-const methods = {
-    print: {
-        call: (arguments,scope) => {
-            console.log(parseArguments(arguments,scope));
-            puts(parseArguments(arguments,scope).replaceAll('\\n', '\n'));
+function startProgram(name) {
+
+    clear();
+
+
+    const methods = {
+        print: {
+            call: (arguments,scope) => {
+                console.log(parseArguments(arguments,scope));
+                puts(parseArguments(arguments,scope).replaceAll('\\n', '\n'));
+            }
         }
-    }
-};
-
-
-
-fetch("programs/battleship.lua").then(r => r.text()).then(codeText => {
-
-    const code = `
-
+    };
+    
+    
+    
+    fetch("programs/" + name + ".lua").then(r => r.text()).then(codeText => {
+    
+        const code = `
+    
 function puts(str)
     js.global:puts(str)
 end
@@ -65,9 +72,11 @@ COLOR_GREEN='#06B46B';
 coroutine.wrap(function ()
     ${codeText}
 end)()
-
-`;
-    const state = new Lua.State();
-    state.execute(code);
-});
-
+    
+    `;
+        const state = new Lua.State();
+        state.execute(code);
+    });
+    
+    
+}
