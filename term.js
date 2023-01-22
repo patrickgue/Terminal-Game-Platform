@@ -9,8 +9,13 @@ const COLOR_GREEN='#06B46B';
 let buffer = '';
 let echo = false;
 let res;
+let current_color = null;
 
 let putc_stack = [];
+
+const CMD_CHAR = 0
+const CMD_COLOR_ON = 1
+const CMD_COLOR_OFF = 2
 
 function initterm(w,h)
 {
@@ -30,10 +35,10 @@ function _render()
 
 function putc(c)
 {
-    putc_stack.push(c);
+    putc_stack.push([CMD_CHAR, c]);
 }
 
-function putc_actual(c)
+function putc_impl(c)
 {
     if (!term)
         throw new Error("no CRT found");
@@ -59,14 +64,7 @@ function putc_actual(c)
     _render();
 }
 
-setInterval(() => {
-    if (putc_stack.length > 0)
-    {
-        putc_stack.reverse();
-        putc_actual(putc_stack.pop());
-        putc_stack.reverse();
-    }
-}, 30)
+
 
 function puts(s)
 {
@@ -78,32 +76,33 @@ function puts(s)
     }
 }
 
-function color_on(c)
+function color_on_impl(fg, bg)
 {
-    if (_inverse) {
-        _html += '<span style="background-color: '+c+'">'
-    } else {
-        _html += '<span style="color: '+c+'">';
+    _html += '<span style="background-color: ' + bg + '; color: ' + fg + ';">'
+}
+
+function color_on(fg, bg)
+{
+    if (current_color)
+    {
+        color_off();
     }
-    _render();
-}
 
-function inverse_toggle()
-{
-    _inverse = !_inverse;
-}
+    current_color = true;
 
-function inverse_on()
-{
-    _inverse = true;
-}
-
-function inverse_off()
-{
-    _inverse = false;
+    putc_stack.push([CMD_COLOR_ON, fg, bg]);
 }
 
 function color_off()
+{
+    if (current_color)
+    {
+        putc_stack.push([CMD_COLOR_OFF])
+    }
+}
+
+
+function color_off_impl()
 {
     if (!term)
         throw new Error("no CRT found");
@@ -124,6 +123,13 @@ function gets(callback)
     })
 }
 
+function clear()
+{
+    putc_stack = [];
+    _html = '';
+    _render();
+}
+
 const input = document.querySelector("#input");
 
 document.body.addEventListener('click', () => input.focus());
@@ -132,8 +138,6 @@ input.addEventListener('keydown', (e) => {
     console.log(e);
     if (e.key === 'Enter')
     {
-        // puts("ENTER\n");
-        console.log(buffer);
         if (res)
             res(buffer);
         echo = false;
@@ -152,3 +156,24 @@ input.addEventListener('keydown', (e) => {
 
     }
 });
+
+setInterval(() => {
+    if (putc_stack.length > 0)
+    {
+        const [cmd, val1, val2] = putc_stack.shift();
+
+        switch(cmd)
+        {
+            case CMD_CHAR:
+                putc_impl(val1);
+                break;
+            case CMD_COLOR_ON:
+                color_on_impl(val1, val2);
+                break;
+            case CMD_COLOR_OFF:
+                color_off_impl();
+                break;
+        }
+
+    }
+}, 30)

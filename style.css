@@ -3,7 +3,7 @@
     --height: 500px;
 
     --offset-left: 70px;
-    --offset-top: 50px;
+    --offset-top: 55px;
 
     --width-wide: calc(var(--width) + var(--offset-left));
     --height-wide: calc(var(--height) + var(--offset-top));
@@ -379,6 +379,8 @@ pre {
     display: flex;
     gap: 20px;
     flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
 }
 
 .led {

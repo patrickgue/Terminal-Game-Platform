@@ -27,7 +27,6 @@ function gets()
     promise = js.global:gets();
     promise['then'](promise, function(_, text)
         rt_text = text
-        print(text, rt_text)
         coroutine.resume(co)
     end)
 
@@ -44,20 +43,16 @@ function sleep(millis)
     coroutine.yield()
 end
 
-function color_on(color)
-    js.global:color_on(color)
+function color_on(fg, bg)
+    js.global:color_on(fg, bg)
 end
 
 function color_off()
     js.global:color_off()
 end
 
-function inverse_on()
-    js.global:inverse_on()
-end
-
-function inverse_off()
-    js.global:inverse_off()
+function clear()
+    js.global:clear()
 end
 
 COLOR_BLACK='#272C2B'
@@ -70,8 +65,7 @@ coroutine.wrap(function ()
     ${codeText}
 end)()
 
-`
-    // console.log(code)
+`;
     const state = new Lua.State();
     state.execute(code);
     
