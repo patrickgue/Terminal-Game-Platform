@@ -62,12 +62,27 @@ function clear()
     js.global:clear()
 end
 
+function mvputc(x,y,c,f,b)
+    js.global:mvputc(x,y,c,f,b)
+end
+
+function graphics_mode()
+    js.global:init_graphics_mode()
+end
+
+function buffer_flush()
+    js.global:_render()
+end
+
 
 COLOR_BLACK='#272C2B'
 COLOR_WHITE='#EEEEEE';
 COLOR_RED='#FF0000';
 COLOR_BLUE='#1471AA';
 COLOR_GREEN='#06B46B';
+
+TERM_MODE_SERIAL = 0
+TERM_MODE_GRAPH = 1
 
 coroutine.wrap(function ()
     ${codeText}

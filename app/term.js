@@ -1,4 +1,4 @@
-let term = null, width, height, _html = '', _inverse = false;
+let term = null, width, height, _html = '', _inverse = false, _char_grid;
 
 const COLOR_BLACK='#272C2B'
 const COLOR_WHITE='#EEEEEE';
@@ -18,12 +18,24 @@ const CMD_CHAR = 0
 const CMD_COLOR_ON = 1
 const CMD_COLOR_OFF = 2
 
+
+const TERM_MODE_SERIAL = 0;
+const TERM_MODE_GRAPH = 1;
+
+
 function initterm(w,h)
 {
     term = document.querySelector('.crt pre');
+    mode = TERM_MODE_SERIAL;
     width = w;
     height = h;
     _render();
+}
+
+function init_graphics_mode()
+{
+    mode = TERM_MODE_GRAPH;
+    clear();
 }
 
 function _render()
@@ -31,12 +43,37 @@ function _render()
     if (!term)
         throw new Error("no CRT found");
 
-    term.innerHTML = _html + buffer + '<span class="cursor"> </span>';
+    if (mode === TERM_MODE_SERIAL)
+    {
+        term.innerHTML = _html + buffer + '<span class="cursor"> </span>';
+    }
+    else
+    {
+        console.log('render?')
+        for (j = 0; j < height; j++)
+        {
+            for (i = 0; i < width; i++)
+            {
+                const ch = _char_grid[j][i];
+
+                _html +=  `<span style="background-color: ${ch.b}; color: ${ch.f}">${ch.c}</span>`;
+            }
+            _html += '\n';
+        }
+        term.innerHTML = _html;
+    }
+    
 }
 
 function putc(c)
 {
     putc_stack.push([CMD_CHAR, c]);
+}
+
+
+function mvputc(x, y, c, f, b)
+{
+    _char_grid[x][y] = {c: c, f: f, b: b};
 }
 
 function putc_impl(c)
@@ -126,8 +163,23 @@ function gets(callback)
 
 function clear()
 {
-    putc_stack = [];
-    _html = '';
+    if (mode === TERM_MODE_GRAPH)
+    {
+        putc_stack = [];
+        _html = '';    
+    }
+    else
+    {
+        _char_grid = [];
+        for (j = 0; j < height; j++)
+        {
+            _char_grid[j] = [];
+            for (i = 0; i < width; i++)
+            {
+                _char_grid[j][i] = {c: ' ', f: COLOR_WHITE, b: COLOR_BLACK};
+            }
+        }
+    }
     _render();
 }
 
@@ -165,22 +217,26 @@ input.addEventListener('keydown', (e) => {
 });
 
 setInterval(() => {
-    if (putc_stack.length > 0)
+    if (mode === TERM_MODE_SERIAL)
     {
-        const [cmd, val1, val2] = putc_stack.shift();
-
-        switch(cmd)
+        if (putc_stack.length > 0)
         {
-            case CMD_CHAR:
-                putc_impl(val1);
-                break;
-            case CMD_COLOR_ON:
-                color_on_impl(val1, val2);
-                break;
-            case CMD_COLOR_OFF:
-                color_off_impl();
-                break;
+            const [cmd, val1, val2] = putc_stack.shift();
+    
+            switch(cmd)
+            {
+                case CMD_CHAR:
+                    putc_impl(val1);
+                    break;
+                case CMD_COLOR_ON:
+                    color_on_impl(val1, val2);
+                    break;
+                case CMD_COLOR_OFF:
+                    color_off_impl();
+                    break;
+            }
+    
         }
-
+    
     }
 }, 1000 / (baud / 8));

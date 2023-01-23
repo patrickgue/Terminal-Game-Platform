@@ -13,6 +13,11 @@ const floppies = [
         title: 'SysV Sim',
         prog: 'world',
         color: '#0ca35d'
+    },
+    {
+        title: 'graphics',
+        prog: 'graphics_test',
+        color: '#05628d'
     }
 ];
 
