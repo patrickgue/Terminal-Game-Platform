@@ -49,7 +49,8 @@ function _render()
     }
     else
     {
-        console.log('render?')
+        _html = '';
+        console.log('render?', width, height, _char_grid)
         for (j = 0; j < height; j++)
         {
             for (i = 0; i < width; i++)
@@ -163,7 +164,7 @@ function gets(callback)
 
 function clear()
 {
-    if (mode === TERM_MODE_GRAPH)
+    if (mode === TERM_MODE_SERIAL)
     {
         putc_stack = [];
         _html = '';    
