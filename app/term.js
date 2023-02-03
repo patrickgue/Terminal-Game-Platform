@@ -12,6 +12,7 @@ let res;
 let current_color = null;
 let baud = 1000;
 
+
 let putc_stack = [];
 
 const CMD_CHAR = 0
@@ -21,7 +22,7 @@ const CMD_COLOR_OFF = 2
 
 const TERM_MODE_SERIAL = 0;
 const TERM_MODE_GRAPH = 1;
-
+let mode = TERM_MODE_SERIAL;
 
 function initterm(w,h)
 {
@@ -50,7 +51,6 @@ function _render()
     else
     {
         _html = '';
-        console.log('render?', width, height, _char_grid)
         for (j = 0; j < height; j++)
         {
             for (i = 0; i < width; i++)
